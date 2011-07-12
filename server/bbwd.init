@@ -1,0 +1,41 @@
+#!/bin/bash
+#
+# bbwd          This shell script takes care of starting and stopping
+#                 Big Brother Watcher Daemon
+#
+# chkconfig: 2345 80 20
+ 
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+DAEMON=/cust/bbh/watcher/bbwd.pl
+LOGFILE=/cust/bbh/watcher/bbwd.log
+PIDFILE=/cust/bbh/watcher/bbwd.pid
+PORT=8585
+NAME=bbwd
+DESC="Big Brother Watcher Daemon"
+ 
+test -x $DAEMON || exit 0
+ 
+set -e
+ 
+case "$1" in
+  start)
+        echo -n "Starting $DESC: "
+        su - bbuser -c "$DAEMON --setsid=1 --log_file=$LOGFILE --pid_file=$PIDFILE --port=$PORT"
+        echo "$NAME started."
+        ;;
+  stop)
+        echo -n "Stopping $DESC: "
+        kill `cat $PIDFILE`
+        echo "$NAME stopped."
+        ;;
+  restart)
+        /etc/init.d/bbwd.init stop && /etc/init.d/bbwd.init start
+        ;;
+  *)
+        N=/etc/init.d/$NAME
+        echo "Usage: $N {start|stop|restart}" >&2
+        exit 1
+        ;; 
+esac
+ 
+exit 0

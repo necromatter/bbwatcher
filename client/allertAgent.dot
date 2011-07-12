@@ -1,0 +1,5 @@
+digraph agent {
+	StatusChangeEvent -> AlertAgentServerDaemon;
+	AlertAgentClientDaemon -> AlertAgentServerDaemon;
+	AlertAgentServerDaemon -> AlertAgentClientDaemon;
+}

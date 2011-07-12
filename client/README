@@ -1,0 +1,87 @@
+README file for Big Brother Watcher Client
+==========================================
+ 
+About
+------------
+The Watcher is an event receiving client for Windows or Unix, written in Python.
+It can receive events from either Big Brother or Xymon monitoring servers.
+
+
+Prerequisites
+-------------
+Python 2.4 and wxPython 2.6.
+
+
+How to install
+--------------
+If you're reading this, it's already installed! On Windows, there should be a shortcut
+on your desktop as well as on the Start menu. On Unix, just run the "aacd.py" script.
+
+When you launch the client, it opens the log window. All event data is written in an
+unfomatted but readable form with local system timestamps:
+<color> <hostname> <service> <priority level>
+
+You can hide the window by either selecting the Hide options from the system tray menu
+or just double-clicking the systray icon.
+
+
+Configuration
+-------------
+One of the main features of the client is the ability to decide which type of alerts
+you want to see, based on the color and Priority level (Only available in Hobbit) of
+each event. Right now, the client assumes that you have configured a Priority level
+for every alert it will see. The server end takes care of determining this, and anything
+without a PRIO is shown as "NA". All "NA" events are allowed through the filter.
+(See ToDO list)
+
+You can either edit the watcher.conf file in the program directory, or use the Settings
+menu option to change the client options. 
+
+
+License
+-------
+Big Brother Watcher is copyrighted (C) 2006 by Matthew Epp
+and Brent Scott.
+ 
+Big Brother Watcher is Open Source software, made available under the 
+GNU General Public License (GPL) version 2.
+ 
+ 
+Support
+-------
+Try the project forum on: http://sourceforge.net/projects/bbwatcher/
+
+
+Changes
+-------
+v0.0.0 [2006.08.01] - First test version.
+v0.0.1 [2006.08.10] - First fully functioning version.
+v0.1.0 [2006.09.18] - Many fixes and new features. Made the event pop-up clickable with a
+	URL link to the web page with the alert data. Created a settings window with many new
+	options. Improved handling of minimizing app to the system tray.
+v0.1.1 [2006.09.21] - More fixes. Better connection handling.
+v0.2.0 [2008.11.01] - Completely rewrote the server code to utilize the Net::Server module.
+	Overhauled the client code to get rid of deprecated calls. Improved the connection
+	functions so now it will try to reconnect if the server goes down. Fixed a lot of bugs.
+v0.2.1 [2008.11.06] - Now every color alert has its own sound associated with it.
+
+ToDo
+----
+- Add filter options for "NA" Priority levels, for compatability with older Big Brother.
+- Create authentication scheme between client and server.
+- Track the overall color of the BB/Hobbit page and change the icon bitmap to
+  reflect that. (Stays red all the time right now)
+
+Known Bugs
+----------
+Keep in mind that this is very alpha software, and as such, I haven't checked it
+thoroughly for bugs yet. Bug reports are welcome in the Bugs section of the project page.
+I'll try to list a few of the more major ones here to avoid redundent reports.
+
+- [Linux] There is a graphical glitch in the alert pop-up window. The background color of
+  the panel does not show in a boxed area around the alert text.
+? If the log window is displayed but not active, the pop-up alerts do not appear above other
+  windows. I could force this behavoir, but I should make it optional, as stealing your
+  window focus can be rather annoying.
+- Some "invalid window handle" errors appear in the log window after closing the About
+  dialog.
